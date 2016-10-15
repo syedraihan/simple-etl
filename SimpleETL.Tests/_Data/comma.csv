@@ -1,0 +1,4 @@
+int,text,date,double,bool
+1,text data1,1/1/1960,12.3,true
+2,text data2,2/3/1970,4.56,false
+3,text data3,4/5/2016,7.89,true

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{40C72483-51E8-4F60-AAC4-E63893D4697D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SimpleETL</RootNamespace>
+    <AssemblyName>SimpleETL</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClearScript, Version=5.4.6.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClearScript.V8.5.4.6\lib\net40\ClearScript.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extract\BufferedReader.cs" />
+    <Compile Include="Extract\Readers\DelimitedFileReader.cs" />
+    <Compile Include="Extract\Readers\Excel97FileReader.cs" />
+    <Compile Include="Extract\Readers\ExcelFileReader.cs" />
+    <Compile Include="Extract\Readers\ExcelFileReaderBase.cs" />
+    <Compile Include="Extract\FileReaderBase.cs" />
+    <Compile Include="Extract\ReaderFactory.cs" />
+    <Compile Include="Extract\Readers\TextFileReaderBase.cs" />
+    <Compile Include="Load\SqlBulkCopyManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transform\ExpressionManager.cs" />
+    <Compile Include="Transform\TransformManager.cs" />
+    <Compile Include="Transform\Validators\BooleanValidator.cs" />
+    <Compile Include="Transform\_Entity\ColumnTypeInfo.cs" />
+    <Compile Include="Transform\Validators\DateTimeValidator.cs" />
+    <Compile Include="Transform\Validators\DecimalValidator.cs" />
+    <Compile Include="Transform\Validators\IntegerValidator.cs" />
+    <Compile Include="Transform\DbSchemaHelper.cs" />
+    <Compile Include="Transform\Validators\StringValidator.cs" />
+    <Compile Include="Transform\ValidatingTransformManager.cs" />
+    <Compile Include="_Public\_Entity\ColumnMappingCollection.cs" />
+    <Compile Include="_Public\_Entity\DataValidationErrorEventArgs.cs" />
+    <Compile Include="Transform\_Entity\ValidationResult.cs" />
+    <Compile Include="Transform\ValidatorBase.cs" />
+    <Compile Include="_Public\_Entity\ExpressionCollection.cs" />
+    <Compile Include="_Public\_Entity\BatchCompletedEventArgs.cs" />
+    <Compile Include="_Public\_Entity\RowInsertErrorEventArgs.cs" />
+    <Compile Include="_Public\Transformer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+if not exist "$(TargetDir)" md "$(TargetDir)"
+xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.4.6\tools\native\x86\*.*" "$(TargetDir)"
+if not exist "$(TargetDir)" md "$(TargetDir)"
+xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.4.6\tools\native\amd64\*.*" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
